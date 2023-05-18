@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
-const port = 8080;
+const port = 21195;
 
 association.init(() => {
   sequelize
