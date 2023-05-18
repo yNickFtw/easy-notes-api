@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
-const sequelize = new Sequelize("easynotes", "root", "", {
+const sequelize = new Sequelize("easynotes", "easynotes", "Delore23Nicolas1", {
   dialect: "mysql",
-  host: "localhost",
+  host: "mysql.easynotes.kinghost.net",
 });
 
 export default sequelize;
