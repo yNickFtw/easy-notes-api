@@ -50,10 +50,6 @@ class NoteRepository {
   public async checkIfIsSavedByUser(noteId: number): Promise<any> {
     const note = await Note.findOne({ where: { id: noteId, isSaved: true } });
 
-    if (!note) {
-      throw new Error("Note is not saved");
-    }
-
     return note;
   }
 
