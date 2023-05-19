@@ -27,7 +27,7 @@ class NoteRepository {
   }
 
   public async findById(id: number): Promise<any> {
-    return await Note.findOne({ where: { id: id } });
+    return await Note.findOne({ where: { id: id }, include: [{ model: User, attributes: ["id", "name"] }] });
   }
 
   public async checkIfIsSaved(userId: number, noteId: number): Promise<any> {
