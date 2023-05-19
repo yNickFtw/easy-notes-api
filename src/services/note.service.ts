@@ -5,7 +5,7 @@ import UserRepository from "../repositories/user.repository";
 class NoteService {
   public async create(newNote: CreateNoteDTO): Promise<void> {
     try {
-      const { title, description, content, userId } = newNote;
+      const { title, description, content, isPublic, userId } = newNote;
 
       // check if user exists
       const user: any = await UserRepository.findById(userId);
@@ -18,6 +18,7 @@ class NoteService {
         title: title,
         description: description,
         content: content,
+        isPublic: isPublic,
         userId: userId,
       };
 

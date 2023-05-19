@@ -13,11 +13,11 @@ class UserRepository {
   }
 
   public async findAll() {
-    return User.findAll();
+    return User.findAll( { attributes: ["id", "name", "email", "createdAt", "updatedAt"] } );
   }
 
   public async findById(id: number) {
-    return User.findOne({ where: { id: id } });
+    return User.findOne({ where: { id: id }, attributes: ["id", "name", "email", "createdAt", "updatedAt"] });
   }
 }
 

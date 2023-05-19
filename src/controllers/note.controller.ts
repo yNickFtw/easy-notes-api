@@ -8,27 +8,31 @@ class NoteController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const token = req.headers["authorization"] as string;
-
       const userId = (await getUserIdFromToken(token)) as number;
-
-      const { title, description, content } = req.body;
-
+  
+      const { title, description, content, isPublic } = req.body;
+  
+      // Define o valor como 1 se a checkbox estiver marcada, caso contrário, define como 0
+      const isPublicValue = isPublic ? 1 : 0;
+  
       const newNote: CreateNoteDTO = {
         title: title,
         description: description,
         content: content,
         userId: userId,
+        isPublic: isPublicValue,
       };
-
+  
       console.log("CONTROLLER NOTE: " + newNote);
-
+  
       await NoteService.create(newNote);
-
+  
       return res.status(201).json({ message: "Note created successfully!" });
     } catch (error: any) {
       return res.status(400).json({ message: error.message });
     }
   }
+  
 
   public async saveNote(req: Request, res: Response): Promise<Response> {
     try {
@@ -88,12 +92,15 @@ class NoteController {
 
       const noteId = req.params.id;
 
-      const { title, description, content } = req.body;
+      const { title, description, content , isPublic } = req.body;
+
+      const isPublicValue = isPublic ? 1 : 0;
 
       const updateNote: UpdateNoteDTO = {
         title: title,
         description: description,
         content: content,
+        isPublic: isPublicValue
       };
 
       await NoteService.updateNote(userId, Number(noteId), updateNote);
