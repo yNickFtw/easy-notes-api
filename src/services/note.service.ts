@@ -74,13 +74,13 @@ class NoteService {
         throw new Error("You are not the owner of this note!");
       }
 
-      const isSaved = await NoteRepository.checkIfIsSaved(userId, noteId);
-
-      if (isSaved) {
-        throw new Error("Note saved with successfully!"); // Lança um erro se a nota já estiver salva
+      const checkIfIsSavedByUser = await NoteRepository.checkIfIsSavedByUser(noteId)
+      
+      if(checkIfIsSavedByUser) {
+        throw new Error("Note is already saves of user")
       }
 
-      return;
+      return await NoteRepository.saveNote(noteId)
     } catch (error: any) {
       throw new Error(error.message);
     }

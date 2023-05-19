@@ -57,6 +57,18 @@ class NoteRepository {
     return note;
   }
 
+  public async saveNote(noteId: number): Promise<boolean> {
+    const note: any = await Note.findOne({ where: { id: noteId } })
+
+    if(!note) throw new Error("Note not found")
+  
+    note.isSaved = true
+
+    await note.save()
+
+    return note
+  }
+
   public async unsaveNote(noteId: number): Promise<boolean> {
     const note: any = await Note.findOne({ where: { id: noteId } });
 
