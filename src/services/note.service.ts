@@ -170,9 +170,13 @@ class NoteService {
   
       if (!note) throw new Error("Note not found!");
   
-      if(note.userId !== userId) throw new Error("User is not owner of this note!")
-  
-      return note
+      if(note.userId !== userId && !note.isPublic) throw new Error("User is not owner of this note!")
+
+      if(note.isPublic) {
+        return note
+      } else {
+        throw new Error("Something wrong.")
+      }
     } catch (error: any) {
       throw new Error(error.message)
     }

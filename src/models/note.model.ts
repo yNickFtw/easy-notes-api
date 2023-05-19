@@ -19,6 +19,10 @@ const Note = database.define("note", {
   isSaved: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
+  },
+  isPublic: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 });
 
