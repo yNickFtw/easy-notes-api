@@ -1,4 +1,5 @@
 import { CreateUserDTO } from "../dtos/user.dtos";
+import { Note } from "../models/note.model";
 import { User } from "../models/user.model";
 
 // interfaces - DTOS
@@ -13,12 +14,32 @@ class UserRepository {
   }
 
   public async findAll() {
-    return User.findAll( { attributes: ["id", "name", "email", "createdAt", "updatedAt"] } );
+    return User.findAll({
+      attributes: ["id", "name", "email", "createdAt", "updatedAt"],
+    });
   }
 
   public async findById(id: number) {
-    return User.findOne({ where: { id: id }, attributes: ["id", "name", "email", "createdAt", "updatedAt"] });
+    const user: any = await User.findByPk(id, {
+      attributes: ["id", "name", "email", "createdAt", "updatedAt"],
+    });
+  
+    if (!user) {
+      return null;
+    }
+  
+    const notes = await Note.findAll({
+      where: { userId: user.id },
+      attributes: ["id", "title", "description"],
+    });
+  
+    return {
+      ...user.toJSON(),
+      notes: notes.map((note) => note.toJSON()),
+    };
   }
+  
+  
 }
 
 export default new UserRepository();
