@@ -172,10 +172,10 @@ class NoteService {
   
       if(note.userId !== userId && !note.isPublic) throw new Error("User is not owner of this note!")
 
-      if(note.isPublic) {
+      if(note.isPublic || note.userId === userId) {
         return note
       } else {
-        throw new Error("Something wrong.")
+        throw new Error("Something wrong here---")
       }
     } catch (error: any) {
       throw new Error(error.message)
