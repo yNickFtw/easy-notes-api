@@ -19,13 +19,32 @@ class UserRepository {
     });
   }
 
-  public async findById(id: number) {
+  public async findById(id: number): Promise<any> {
+    const user: any = await User.findByPk(id, {
+      attributes: ["id", "name", "email", "createdAt", "updatedAt"]
+    })
+
+    if(!user) {
+      throw new Error("User not found!")
+    }
+
+    const notes = await Note.findAll({
+      where: { userId: user.id, isPublic: true },
+    })
+
+    return {
+      ...user.toJSON(),
+      notes: notes.map((note) => note.toJSON()),
+    }
+  }
+
+  public async findLoggedUser(id: number) {
     const user: any = await User.findByPk(id, {
       attributes: ["id", "name", "email", "createdAt", "updatedAt"],
     });
   
     if (!user) {
-      return null;
+      throw new Error("User not found!")
     }
   
     const notes = await Note.findAll({

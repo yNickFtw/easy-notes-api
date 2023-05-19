@@ -42,7 +42,7 @@ class UserController {
 
       const userId = (await getUserIdFromToken(token)) as number;
 
-      const user = await UserService.findById(userId);
+      const user = await UserService.findLoggedUser(userId);
 
       return res.status(200).json(user);
     } catch (error: any) {
