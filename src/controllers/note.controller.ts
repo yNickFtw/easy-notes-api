@@ -143,6 +143,16 @@ class NoteController {
     }
   }
 
+  public async listPublicNotes(req: Request, res: Response): Promise<Response> {
+    try {
+      const notes = await NoteService.listPublicNotes()
+
+      return res.status(200).json(notes)
+    } catch (error: any) {
+      return res.status(404).json({message: error.message})
+    }
+  }
+
   public async listNotes(req: Request, res: Response): Promise<Response> {
     try {
       const token = req.headers["authorization"] as string;

@@ -1,5 +1,6 @@
 import { CreateNoteDTO, UpdateNoteDTO } from "../dtos/note.dtos";
 import { Note } from "../models/note.model";
+import { User } from "../models/user.model";
 
 class NoteRepository {
   public async create(note: CreateNoteDTO): Promise<any> {
@@ -54,15 +55,15 @@ class NoteRepository {
   }
 
   public async saveNote(noteId: number): Promise<boolean> {
-    const note: any = await Note.findOne({ where: { id: noteId } })
+    const note: any = await Note.findOne({ where: { id: noteId } });
 
-    if(!note) throw new Error("Note not found")
-  
-    note.isSaved = true
+    if (!note) throw new Error("Note not found");
 
-    await note.save()
+    note.isSaved = true;
 
-    return note
+    await note.save();
+
+    return note;
   }
 
   public async unsaveNote(noteId: number): Promise<boolean> {
@@ -86,8 +87,16 @@ class NoteRepository {
     });
   }
 
+  public async listPublicNotes(): Promise<any> {
+    return await Note.findAll({
+      where: { isPublic: 1 },
+      order: [["createdAt", "DESC"]],
+      include: [{ model: User, attributes: ["id", "name"] }]
+    });
+  }
+
   public async listNotes(userId: number): Promise<any> {
-    return Note.findAll({
+    return await Note.findAll({
       where: { userId: userId },
       order: [["createdAt", "DESC"]],
     });

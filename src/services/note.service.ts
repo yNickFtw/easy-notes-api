@@ -183,6 +183,16 @@ class NoteService {
     }
   }
 
+  public async listPublicNotes(): Promise<any> {
+    try {
+      const notes = await NoteRepository.listPublicNotes()
+
+      return notes
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
   public async listNotes(userId: number): Promise<any> {
     try {
       const user = await UserRepository.findById(userId);
