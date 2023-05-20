@@ -127,6 +127,22 @@ class NoteController {
     }
   }
 
+  public async searchPublicsNotes(req: Request, res: Response): Promise<Response> {
+    try {
+      const { q } = req.params
+      
+      if(!q) {
+        return res.status(400).json({message: "Something wrong!"})
+      }
+
+      const notes = await NoteService.searchPublicsNotes(q)
+
+      return res.status(200).json(notes)
+    } catch (error: any) {
+      return res.status(404).json({ message: error.message })
+    }
+  }
+
   public async listNoteById(req: Request, res: Response): Promise<Response> {
     try {
       const token = req.headers["authorization"] as string;

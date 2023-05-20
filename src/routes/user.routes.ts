@@ -8,6 +8,7 @@ router.post("/register", UserController.create);
 router.post("/authenticate", UserController.authenticate);
 router.get("/", checkIfIsAuthenticated, UserController.findAll);
 router.get("/profile", checkIfIsAuthenticated, UserController.getLoggedUser);
+router.get('/search/:q', checkIfIsAuthenticated, UserController.searchUser)
 router.get("/:id", checkIfIsAuthenticated, UserController.findById);
 
 export default router;

@@ -76,6 +76,18 @@ class UserService {
     }
   }
 
+  public async searchUser(q: string): Promise<any> {
+    try {
+      const users = await UserRepository.searchUser(q)
+
+      if(!users) throw new Error("Users not found")
+
+      return users
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
   public async findLoggedUser(id: number): Promise<any> {
     try {
       const user = await UserRepository.findLoggedUser(id)

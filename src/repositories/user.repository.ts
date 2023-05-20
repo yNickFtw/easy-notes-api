@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { CreateUserDTO } from "../dtos/user.dtos";
 import { Note } from "../models/note.model";
 import { User } from "../models/user.model";
@@ -17,6 +18,14 @@ class UserRepository {
     return User.findAll({
       attributes: ["id", "name", "email", "createdAt", "updatedAt"],
     });
+  }
+
+  public async searchUser(q: string): Promise<any> {
+    return await User.findAll({
+      where: { name: {
+        [Op.like]: `%${q}%`
+      } }
+    })
   }
 
   public async findById(id: number): Promise<any> {

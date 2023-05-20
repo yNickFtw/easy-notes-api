@@ -161,6 +161,20 @@ class NoteService {
     }
   }
 
+  public async searchPublicsNotes(q: string): Promise<any> {
+    try {
+      const notes = await NoteRepository.searchPublicsNotes(q)
+
+      if(!notes) {
+        throw new Error("Notes not found!")
+      }
+
+      return notes
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
   public async listNoteById(userId: number, noteId: number): Promise<any> {
     try {
       const user = await UserRepository.findById(userId);

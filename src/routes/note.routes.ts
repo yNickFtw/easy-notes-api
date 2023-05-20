@@ -12,6 +12,7 @@ router.get("/", checkIfIsAuthenticated, NoteController.listNotes);
 router.get('/saves', checkIfIsAuthenticated, NoteController.listSavedNotes)
 router.get('/publics', checkIfIsAuthenticated, NoteController.listPublicNotes)
 router.get('/:id', checkIfIsAuthenticated, NoteController.listNoteById)
+router.get('/search/:q', checkIfIsAuthenticated, NoteController.searchPublicsNotes)
 router.put('/save/:id', checkIfIsAuthenticated, NoteController.saveNote)
 router.put('/unsave/:id', checkIfIsAuthenticated, NoteController.unsaveNote)
 

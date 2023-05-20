@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { CreateNoteDTO, UpdateNoteDTO } from "../dtos/note.dtos";
 import { Note } from "../models/note.model";
 import { User } from "../models/user.model";
@@ -78,6 +79,17 @@ class NoteRepository {
     await note.save();
 
     return note;
+  }
+
+  public async searchPublicsNotes(q: string): Promise<any> {
+    return await Note.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${q}%`
+        },
+        isPublic: true
+      },
+    });  
   }
 
   public async listSavedNotes(userId: number): Promise<any> {
