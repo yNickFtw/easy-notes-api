@@ -52,19 +52,23 @@ class UserController {
 
   public async searchUser(req: Request, res: Response): Promise<Response> {
     try {
-      const { q } = req.params
+      const { q } = req.params;
 
-      const users = await UserService.searchUser(q)
+      const users = await UserService.searchUser(q);
 
-      return res.status(200).json(users)
+      return res.status(200).json(users);
     } catch (error: any) {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json({ message: error.message });
     }
   }
 
   public async findAll(req: Request, res: Response): Promise<Response> {
     try {
-      const users = await UserService.findAll();
+      const token = req.headers["authorization"] as string;
+
+      const id = (await getUserIdFromToken(token)) as number;
+
+      const users = await UserService.findAll(id);
 
       return res.status(200).json(users);
     } catch (error: any) {

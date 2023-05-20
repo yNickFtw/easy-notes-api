@@ -14,8 +14,13 @@ class UserRepository {
     return User.findOne({ where: { email } });
   }
 
-  public async findAll() {
+  public async findAll(id: number) {
     return User.findAll({
+      where: {
+        id: {
+          [Op.ne]: id
+        }
+      },
       attributes: ["id", "name", "email", "createdAt", "updatedAt"],
     });
   }

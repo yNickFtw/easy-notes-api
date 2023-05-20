@@ -62,9 +62,9 @@ class UserService {
     }
   }
 
-  public async findAll(): Promise<any> {
+  public async findAll(id: number): Promise<any> {
     try {
-      const users = await UserRepository.findAll();
+      const users = await UserRepository.findAll(id);
 
       if (!users) {
         throw new Error("Users not found!");

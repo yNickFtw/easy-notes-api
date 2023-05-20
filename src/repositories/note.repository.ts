@@ -89,6 +89,7 @@ class NoteRepository {
         },
         isPublic: true
       },
+      include: { model: User, attributes: ["id", "name"] }
     });  
   }
 
